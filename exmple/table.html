@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css"/>
+    <style type="text/css">
+        thead {
+            font-weight: bold;
+            background-color: #d3d3d3;
+        }
+
+        thead>tr>td {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div style="margin-top: 10px;"></div>
+    <table class="move table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td class="moveable">名称</td>
+            <td class="moveable">演唱</td>
+            <td class="moveable">内容</td>
+            <td class="moveable">时间</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>千千阙歌</td>
+            <td>陈慧娴</td>
+            <td>徐徐回望...</td>
+            <td>不详</td>
+        </tr>
+        <tr>
+            <td>nemo</td>
+            <td>夜愿</td>
+            <td>This is me for forever</td>
+            <td>1989-07-21</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--<div id="move_flag" style="position: absolute;z-index: 100;display: none;border: 2px solid #444;"></div>-->
+
+</body>
+<script type="text/javascript" src="jquery.min.1.8.3.js"></script>
+<script type="text/javascript" src="../table-column-movement.0.1.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(document).bind("selectstart", function () {
+            return false;
+        });
+        tableColumn = new TableColumn(".move","moveable");
+        tableColumn.init().onmove(function () {
+            alert("onmove");
+        });
+//        tableColumn.onmove(function () {
+//            alert("onmove");
+//        });
+    });
+</script>
+</html>
