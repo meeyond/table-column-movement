@@ -1,10 +1,9 @@
 /**
- * User: wang
- * Date: 12-12-27
- * Time: 下午2:30
+ * @author: meeyond
+ * @date: 12-12-28 @time: 上午11:34
  *
  * 用法
- * 1: new一个TalbeColumn对象
+ * 1: new一个TableColumn对象
  *         tableColumn = new TableColumn(".move","moveable");
  *         or
  *         tableColumn = new TableColumn(".move");

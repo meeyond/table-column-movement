@@ -1,7 +1,6 @@
 /**
- * User: wang
- * Date: 12-12-27
- * Time: 下午2:30
+ * @author: meeyond
+ * @date: 12-12-27 @time: 下午2:30
  *
  * 用法
  * 1: new一个TalbeColumn对象
