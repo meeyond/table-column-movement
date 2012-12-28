@@ -193,7 +193,7 @@ function TableColumn(selecter, moveableClass) {
                 }
                 _currentColomnEles[_currentColomnEles.length] = thisColumnEle;
             });
-            $moveFlag.css("left", e.pageX - 2).css("top", offsetTop).css("height", thisHeight - 2).show();
+            $moveFlag.css("left", e.pageX - 2).css("top", offsetTop).css("height", thisHeight).show();
         }
     };
     /**
