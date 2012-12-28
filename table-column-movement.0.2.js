@@ -118,14 +118,14 @@ function TableColumn(selecter, moveableClass) {
         changeHtml(thisCol, changeCol, thisIndex, changeIndex);
         if (_all) {
             tbodyTr.each(function (index, tr) {
-                var param1 = $(tr).children("td").eq(thisIndex);
-                var param2 = $(tr).children("td").eq(changeIndex);
+                var param1 = $(tr).children().eq(thisIndex);
+                var param2 = $(tr).children().eq(changeIndex);
                 changeHtml(param1, param2, thisIndex, changeIndex);
             });
         } else {
             tbodyTr.each(function (index, tr) {
-                var param1 = $(tr).children("td." + _moveTdClass).eq(thisIndex);
-                var param2 = $(tr).children("td." + _moveTdClass).eq(changeIndex);
+                var param1 = $(tr).children("." + _moveTdClass).eq(thisIndex);
+                var param2 = $(tr).children("." + _moveTdClass).eq(changeIndex);
                 changeHtml(param1, param2, thisIndex, changeIndex);
             });
         }
