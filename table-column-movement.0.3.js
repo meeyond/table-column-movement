@@ -48,6 +48,7 @@ function TableColumn(selecter, moveableClass) {
     //移动标记对象
     var $moveFlag;
     //回调
+    var _currentColomnEles = new Array();
     var _onmove = function () {
     };
     /**
@@ -59,8 +60,6 @@ function TableColumn(selecter, moveableClass) {
         _x = e.pageX - ($this.offset().left - 1);
         $this.attr("moveable", "1");
         setSelectedColumnStyle($this, e);
-//        eleTdStyle = $this.find("td").style;
-//        eleThStyle = $this.find("th").style;
     };
     /**
      * 鼠标事件 mousemove
@@ -83,8 +82,9 @@ function TableColumn(selecter, moveableClass) {
             _onmove();
         }
         _onmoveRun = false;
-        _table.find("td").attr("style", "");
-        _table.find("th").attr("style", "");
+        for (var i = 0; i < _currentColomnEles.length; i++) {
+            _currentColomnEles[i].attr("style", "");
+        }
     };
     /**
      * 拖动当前列响应
@@ -177,6 +177,7 @@ function TableColumn(selecter, moveableClass) {
             var thisHeight = $this[0].offsetHeight;
             var rowCount = tbodyTr.length;
             $this.attr("style", topStyle);
+            _currentColomnEles[_currentColomnEles.length] = $this;
             tbodyTr.each(function (index, tr) {
                 var thisColumnEle;
                 if (_all) {
@@ -190,6 +191,7 @@ function TableColumn(selecter, moveableClass) {
                 } else {
                     thisColumnEle.attr("style", style);
                 }
+                _currentColomnEles[_currentColomnEles.length] = thisColumnEle;
             });
             $moveFlag.css("left", e.pageX - 2).css("top", offsetTop).css("height", thisHeight - 2).show();
         }
