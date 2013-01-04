@@ -104,7 +104,7 @@ function TableColumn(selecter, moveableClass) {
                 if (left > l && left < r && index != thisIndex) {
                     var tbodyTr = _theadColumn.parent().parent().siblings("tbody").children("tr");
                     changeColumn($this, $(headTr), tbodyTr, thisIndex, changeIndex);
-                    //重置当前列
+                    //重置列
                     reset_theadColumn();
                     _onmoveRun = true;
                 }
