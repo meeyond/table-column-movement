@@ -84,8 +84,8 @@ function TableColumn(selecter, moveableClass) {
             _onmove();
         }
         _onmoveRun = false;
-        _table.find("td").attr("style","");
-        _table.find("th").attr("style","");
+        _table.find("td").attr("style", "");
+        _table.find("th").attr("style", "");
     };
     /**
      * 拖动当前列响应
@@ -231,7 +231,7 @@ function TableColumn(selecter, moveableClass) {
                 });
             }
         });
-        _theadColumn = _table.find("thead").find("." + _moveTdClass);
+        _theadColumn = _table.find("thead").find("tr:eq(0)").find("." + _moveTdClass);
         return publicInit.apply(this);
     };
     /**
