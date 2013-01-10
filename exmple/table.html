@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title></title>
-    <link type="text/css" rel="stylesheet" href="bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
     <style type="text/css">
         thead {
             font-weight: bold;
@@ -21,24 +21,73 @@
     <table class="move table table-bordered table-hover">
         <thead>
         <tr>
+            <td>时间</td>
             <td class="moveable">名称</td>
             <td class="moveable">演唱</td>
             <td class="moveable">内容</td>
-            <td class="moveable">时间</td>
         </tr>
         </thead>
         <tbody>
         <tr>
+            <td>1989-07-21</td>
             <td>千千阙歌</td>
             <td>陈慧娴</td>
-            <td>徐徐回望...</td>
-            <td>不详</td>
+            <td>徐徐回望，曾属于彼此的晚上</td>
         </tr>
         <tr>
+            <td>1989-07-21</td>
             <td>nemo</td>
             <td>夜愿</td>
             <td>This is me for forever</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="move-all table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td>时间</td>
+            <td>名称</td>
+            <td>演唱</td>
+            <td>内容</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
             <td>1989-07-21</td>
+            <td>千千阙歌</td>
+            <td>陈慧娴</td>
+            <td>徐徐回望，曾属于彼此的晚上</td>
+        </tr>
+        <tr>
+            <td>1989-07-21</td>
+            <td>nemo</td>
+            <td>夜愿</td>
+            <td>This is me for forever</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="move-complex table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td>时间</td>
+            <td>内容</td>
+            <td>名称</td>
+            <td class='moveable'>演唱</td>
+            <td class="moveable">备注</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td rowspan="2">1989-07-21</td>
+            <td colspan="2">千千阙歌</td>
+            <td class='moveable'>陈慧娴</td>
+            <td class="moveable">来自中国</td>
+        </tr>
+        <tr>
+            <td>This is me for forever</td>
+            <td>nemo</td>
+            <td class='moveable'>夜愿</td>
+            <td class="moveable">来自芬兰</td>
         </tr>
         </tbody>
     </table>
@@ -46,20 +95,17 @@
 <!--<div id="move_flag" style="position: absolute;z-index: 100;display: none;border: 2px solid #444;"></div>-->
 
 </body>
-<script type="text/javascript" src="jquery.min.1.8.3.js"></script>
-<script type="text/javascript" src="../table-column-movement.0.1.js"></script>
+<script type="text/javascript" src="../../lib/jquery.min.1.8.3.js"></script>
+<script type="text/javascript" src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="table-column-movement.0.3.js"></script>
 <script type="text/javascript">
     $(function () {
         $(document).bind("selectstart", function () {
             return false;
         });
-        tableColumn = new TableColumn(".move","moveable");
-        tableColumn.init().onmove(function () {
-            alert("onmove");
-        });
-//        tableColumn.onmove(function () {
-//            alert("onmove");
-//        });
+        new TableColumn(".move", "moveable").init();
+        new TableColumn(".move-all").initAll();
+        new TableColumn(".move-complex", "moveable").initComplex();
     });
 </script>
 </html>

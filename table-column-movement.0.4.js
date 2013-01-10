@@ -11,6 +11,8 @@
  * 2：调用初始化方法
  *         tableColumn.init(); 需要第二个参数  选择表可以移动的列
  *         tableColumn.initAll();不需要第二个参数 表的所有列都可以移动
+ *         tableColumn.initComplex();需要第二个参数  选择表可以移动的列 适用于有单元格合并的表格 需要指定所有可移动单元格 不过合并所涉及到的列无法移动
+ *         详见例子
  * 3：移动回调方法(可选)
  *         tableColumn.onmove(function () {
  *             alert("onmove");
@@ -36,7 +38,7 @@ function TableColumn(selecter, moveableClass) {
     //可移动列对象
     var _theadColumn;
     //所有列
-    var _allTheadColumn = $(selecter).find("thead").children("tr").children();
+    var _allTheadColumn = $(selecter).find("thead").find("tr").children();
     //当前列
     var _thisColumn;
     //
@@ -104,7 +106,7 @@ function TableColumn(selecter, moveableClass) {
                 if (left > l && left < r && index != thisIndex) {
                     var tbodyTr = _theadColumn.parent().parent().siblings("tbody").children("tr");
                     changeColumn($this, $(headTr), tbodyTr, thisIndex, changeIndex);
-                    //重置列
+                    //重置当前列
                     reset_theadColumn();
                     _onmoveRun = true;
                 }
@@ -242,7 +244,20 @@ function TableColumn(selecter, moveableClass) {
      */
     this.initAll = function () {
         _all = true;
-        _theadColumn = _table.find("thead").children("tr").children();
+        _theadColumn = _table.find("thead").find("tr").find("td");
+        return publicInit.apply(this);
+    };
+    /**
+     * 复杂表格 有行、列合并
+     * 注意：行列合并涉及到的列的不能拖动
+     * 用此方法需要在所有课拖动的单元格上都添加可拖动标示
+     * @return {publicInit}
+     */
+    this.initComplex = function () {
+        if (_moveTdClass == undefined) {
+            throw "The 2nd param is not undefined!";
+        }
+        _theadColumn = _table.find("thead").find("." + _moveTdClass);
         return publicInit.apply(this);
     };
     /**
@@ -253,3 +268,4 @@ function TableColumn(selecter, moveableClass) {
         _onmove = onmove;
     };
 }
+
