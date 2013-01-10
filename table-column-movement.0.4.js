@@ -84,9 +84,11 @@ function TableColumn(selecter, moveableClass) {
             _onmove();
         }
         _onmoveRun = false;
-        for (var i = 0; i < _currentColomnEles.length; i++) {
-            _currentColomnEles[i].attr("style", "");
-        }
+        _table.find("td").attr("style","");
+//        _theadColumn.parent().siblings().children().attr("style", style);
+//        for (var i = 0; i < _currentColomnEles.length; i++) {
+//            _currentColomnEles[i].attr("style", "");
+//        }
     };
     /**
      * 拖动当前列响应
@@ -104,8 +106,8 @@ function TableColumn(selecter, moveableClass) {
                 var l = $(headTr).offset().left;
                 var changeIndex = _theadColumn.index($(headTr));
                 if (left > l && left < r && index != thisIndex) {
-                    var tbodyTr = _theadColumn.parent().parent().siblings("tbody").children("tr");
-                    changeColumn($this, $(headTr), tbodyTr, thisIndex, changeIndex);
+                    var tableTr = _table.find("tr");
+                    changeColumn($this, $(headTr), tableTr, thisIndex, changeIndex);
                     //重置当前列
                     reset_theadColumn();
                     _onmoveRun = true;
@@ -122,7 +124,6 @@ function TableColumn(selecter, moveableClass) {
      * @param changeIndex 交换dom index
      */
     var changeColumn = function (thisCol, changeCol, tbodyTr, thisIndex, changeIndex) {
-        changeHtml(thisCol, changeCol, thisIndex, changeIndex);
         if (_all) {
             tbodyTr.each(function (index, tr) {
                 var param1 = $(tr).children().eq(thisIndex);
@@ -176,10 +177,11 @@ function TableColumn(selecter, moveableClass) {
             var offsetTop = $this.offset().top - 1;
             var thisColumnIndex = _theadColumn.index($this);
             var tbodyTr = _theadColumn.parent().parent().siblings("tbody").children("tr");
-            var thisHeight = $this[0].offsetHeight;
+            var thisHeight = _table[0].offsetHeight;
             var rowCount = tbodyTr.length;
             $this.attr("style", topStyle);
             _currentColomnEles[_currentColomnEles.length] = $this;
+            $this.parent().siblings().children("." + _moveTdClass).eq(thisColumnIndex).attr("style", style);
             tbodyTr.each(function (index, tr) {
                 var thisColumnEle;
                 if (_all) {
@@ -187,7 +189,6 @@ function TableColumn(selecter, moveableClass) {
                 } else {
                     thisColumnEle = $(tr).children("." + _moveTdClass).eq(thisColumnIndex);
                 }
-                thisHeight += $(tr)[0].offsetHeight;
                 if (index + 1 == rowCount) {
                     thisColumnEle.attr("style", bottomStyle);
                 } else {
