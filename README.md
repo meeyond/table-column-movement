@@ -6,3 +6,5 @@ new TableColumn(".move","moveable").init().onmove(function(){
 //Do whatever you want
 });
 
+版本0.1、0.2作于初期，因其拖动效果有别于现在，故留于此。
+
