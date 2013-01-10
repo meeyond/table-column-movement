@@ -85,10 +85,7 @@ function TableColumn(selecter, moveableClass) {
         }
         _onmoveRun = false;
         _table.find("td").attr("style","");
-//        _theadColumn.parent().siblings().children().attr("style", style);
-//        for (var i = 0; i < _currentColomnEles.length; i++) {
-//            _currentColomnEles[i].attr("style", "");
-//        }
+        _table.find("th").attr("style","");
     };
     /**
      * 拖动当前列响应
