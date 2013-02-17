@@ -50,7 +50,6 @@ function TableColumn(selecter, moveableClass) {
     //移动标记对象
     var $moveFlag;
     //回调
-    var _currentColomnEles = new Array();
     var _onmove = function () {
     };
     /**
@@ -84,8 +83,8 @@ function TableColumn(selecter, moveableClass) {
             _onmove();
         }
         _onmoveRun = false;
-        _table.find("td").attr("style", "");
-        _table.find("th").attr("style", "");
+        _table.find("th").removeClass("moving_ele").removeClass("moving_b_t");
+        _table.find("td").removeClass("moving_ele").removeClass("moving_b_b");
     };
     /**
      * 拖动当前列响应
@@ -168,17 +167,13 @@ function TableColumn(selecter, moveableClass) {
      */
     var setSelectedColumnStyle = function ($this, e) {
         if ($this.attr("moveable")) {
-            var topStyle = "border-left:2px solid #777;border-right:2px solid #777;border-top:2px solid #777";
-            var style = "border-left:2px solid #777;border-right:2px solid #777;";
-            var bottomStyle = "border-left:2px solid #777;border-right:2px solid #777;border-bottom:2px solid #777";
             var offsetTop = $this.offset().top - 1;
             var thisColumnIndex = _theadColumn.index($this);
             var tbodyTr = _theadColumn.parent().parent().siblings("tbody").children("tr");
             var thisHeight = _table[0].offsetHeight;
             var rowCount = tbodyTr.length;
-            $this.attr("style", topStyle);
-            _currentColomnEles[_currentColomnEles.length] = $this;
-            $this.parent().siblings().children("." + _moveTdClass).eq(thisColumnIndex).attr("style", style);
+            $this.addClass("moving_ele").addClass("moving_b_t");
+            $this.parent().siblings().children("." + _moveTdClass).eq(thisColumnIndex).addClass("moving_ele").addClass("moving_b_t");
             tbodyTr.each(function (index, tr) {
                 var thisColumnEle;
                 if (_all) {
@@ -187,11 +182,10 @@ function TableColumn(selecter, moveableClass) {
                     thisColumnEle = $(tr).children("." + _moveTdClass).eq(thisColumnIndex);
                 }
                 if (index + 1 == rowCount) {
-                    thisColumnEle.attr("style", bottomStyle);
+                    thisColumnEle.addClass("moving_ele").addClass("moving_b_b");
                 } else {
-                    thisColumnEle.attr("style", style);
+                    thisColumnEle.addClass("moving_ele");
                 }
-                _currentColomnEles[_currentColomnEles.length] = thisColumnEle;
             });
             $moveFlag.css("left", e.pageX - 2).css("top", offsetTop).css("height", thisHeight).show();
         }
@@ -204,10 +198,28 @@ function TableColumn(selecter, moveableClass) {
         $(document).bind("selectstart", function () {
             return false;
         });
-        $("body").append("<div id='move_flag-what-the-fuck' style='position: absolute;z-index: 100;display: none;border: 2px solid #444;'></div>");
-        $("head").append("<style type='text/css'>.moving_ele{border-left:2px solid #777;border-right:2px solid #777};.moving-b-t{border-top:2px solid #777};.moving-b-b{border-bottom: 2px solid #777;}</style>");
+        if (!$("#move_flag-what-the-fuck")[0]) {
+            $("body").append("<div id='move_flag-what-the-fuck' style='position: absolute;z-index: 100;display: none;border: 2px solid #444;'></div>");
+        }
+        if (!$("#move_table_style")[0]) {
+            $("head").append("<style id='move_table_style' type='text/css'>" +
+                "table.move>tbody>tr>td.moving_ele,table.move>thead>tr>th.moving_ele" +
+                "{" +
+                "border-left:2px solid #777;" +
+                "border-right:2px solid #777" +
+                "}" +
+                "table.move>thead:first-child>tr>th.moving_b_t" +
+                "{" +
+                "border-top:2px solid #777;" +
+                "}" +
+                "table.move>tbody>tr>td.moving_b_b" +
+                "{" +
+                "border-bottom: 2px solid #777;" +
+                "}" +
+                "</style>");
+        }
         $moveFlag = $("#move_flag-what-the-fuck");
-        _theadColumn.live("mousedown", theadMouseDown);
+        _theadColumn.on("mousedown", theadMouseDown);
         _table.bind("mousemove", theadMouseMove);
         $(document).bind("mouseup", theadMouseUp);
         return this;
@@ -255,7 +267,7 @@ function TableColumn(selecter, moveableClass) {
         if (_moveTdClass == undefined) {
             throw "The 2nd param is not undefined!";
         }
-        _theadColumn = _table.find("thead").find("." + _moveTdClass);
+        _theadColumn = _table.find("thead").find("tr").find("." + _moveTdClass);
         return publicInit.apply(this);
     };
     /**
@@ -266,4 +278,5 @@ function TableColumn(selecter, moveableClass) {
         _onmove = onmove;
     };
 }
+
 
